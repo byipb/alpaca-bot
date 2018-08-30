@@ -31,18 +31,18 @@ public class Alpaca extends ListenerAdapter {
         }
     }
 
-    private void deleteMessage(MessageReceivedEvent event) throws InterruptedException {
-
-        try {
-            TimeUnit.SECONDS.sleep(1);
-            event.getMessage().delete();
-            event.getMessage().delete();
-        }
-
-        catch (InterruptedException e){
-            e.printStackTrace();
-        }
-    }
+//    private void deleteMessage(MessageReceivedEvent event) throws InterruptedException {
+//
+//        try {
+//            TimeUnit.SECONDS.sleep(1);
+//            event.getMessage().delete();
+//            event.getMessage().delete();
+//        }
+//
+//        catch (InterruptedException e){
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -55,7 +55,7 @@ public class Alpaca extends ListenerAdapter {
         List<Role> roles = guild.getRoles();
 
         // List of roles
-        //Role snowflake = roles.get(3);
+        // Role snowflake = roles.get(3);
         Role cloud = roles.get(6);
 
         // Alpaca bot is not allowed to talk to itself!!!
@@ -63,27 +63,31 @@ public class Alpaca extends ListenerAdapter {
             return;
         }
 
+        // Alpaca bot hears every thing owo
         System.out.println("We received a message from " +
                 event.getAuthor().getName() + ": " +
                 event.getMessage().getContentDisplay()
         );
 
-        // Ping Alpaca bot to have him reply "Pamf!"
-        if (event.getMessage().getContentRaw().equals("!ping")){
+        // Pet Alpaca bot to have him reply "Pamf!"
+        if (event.getMessage().getContentRaw().equals("!pet")){
             //remember to call queue()!
             //otherwise our message will never be sent
             event.getChannel().sendMessage("Pamf!").queue();
         }
 
-        // Give a user the Cloud role
-        if (event.getMessage().getContentRaw().equals(".iam cloud")){
+        if (event.)
 
-            // Alpaca bot gives Role
-            guildController.addSingleRoleToMember(member, cloud).queue();
-            event.getChannel().sendMessage("You're a cloud now, "+ event.getMember().getUser().getName() + "!").queue();
+        // Give a user the Cloud role in ice prison
+        if (event.getTextChannel().getId().equals("484645441749647361")) {
+            if (event.getMessage().getContentRaw().equals(".iam cloud")) {
+                // Delete messages to keep ice-prison clean, we aren't a dirty prison!
+                event.getMessage().delete().queue();
+                // Alpaca bot gives Role
+                guildController.addSingleRoleToMember(member, cloud).queue();
         }
-
-        // TODO: clean up ice-prison message spam by deleting member message and bot message
-
+        }else {
+            event.getChannel().sendMessage("You are a special cloud, aren't you?").queue();
+        }
     }
 }
