@@ -56,8 +56,9 @@ public class Alpaca extends ListenerAdapter {
 
         // List of roles
         //Role snowflake = roles.get(3);
-        Role cloud = roles.get(4);
+        Role cloud = roles.get(6);
 
+        // Alpaca bot is not allowed to talk to itself!!!
         if (event.getAuthor().isBot()){
             return;
         }
@@ -67,6 +68,7 @@ public class Alpaca extends ListenerAdapter {
                 event.getMessage().getContentDisplay()
         );
 
+        // Ping Alpaca bot to have him reply "Pamf!"
         if (event.getMessage().getContentRaw().equals("!ping")){
             //remember to call queue()!
             //otherwise our message will never be sent
@@ -74,7 +76,7 @@ public class Alpaca extends ListenerAdapter {
         }
 
         // Give a user the Cloud role
-        if (event.getMessage().getContentRaw().equals(".iam Cloud")){
+        if (event.getMessage().getContentRaw().equals(".iam cloud")){
 
             // Alpaca bot gives Role
             guildController.addSingleRoleToMember(member, cloud).queue();
