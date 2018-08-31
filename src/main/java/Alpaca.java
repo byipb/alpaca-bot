@@ -22,7 +22,7 @@ public class Alpaca extends ListenerAdapter {
 
         try {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
-            String token = new String (Files.readAllBytes(Paths.get("D:\\Users\\Dandy\\IdeaProjects\\alpaca-bot\\src\\main\\resources\\token.txt")));
+            String token = new String (Files.readAllBytes(Paths.get("./src/main/resources/token.txt")));
 
 //            while ((token != null){
 //                System.out.println(token);
@@ -74,16 +74,14 @@ public class Alpaca extends ListenerAdapter {
         // Alpaca bot hears every thing owo
         System.out.println("We received a message from " +
                 event.getAuthor().getName() + ": " +
-
                 event.getMessage().getContentDisplay());
 
 
         // Pet Alpaca bot to have him reply "Pamf!"
-        if (event.getMessage().getContentRaw().equals("!pet")){
+        if (event.getMessage().getContentRaw().equalsIgnoreCase("!pet")){
             //remember to call queue()!
             //otherwise our message will never be sent
             event.getChannel().sendMessage("Pamf!").queue();
-            return;
         }
 
         // Give a user the Cloud role in ice prison
