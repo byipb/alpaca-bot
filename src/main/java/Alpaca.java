@@ -22,7 +22,7 @@ public class Alpaca extends ListenerAdapter {
 
         try {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
-            String token = new String (Files.readAllBytes(Paths.get("C:\\Users\\Dandy\\IdeaProjects\\discord-alpaca-bot\\src\\main\\resources\\token.txt")));
+            String token = new String (Files.readAllBytes(Paths.get("D:\\Users\\Dandy\\IdeaProjects\\alpaca-bot\\src\\main\\resources\\token.txt")));
 
 //            while ((token != null){
 //                System.out.println(token);
@@ -94,9 +94,10 @@ public class Alpaca extends ListenerAdapter {
                 // Alpaca bot gives Role
                 guildController.addSingleRoleToMember(member, cloud).queue();
             }
-        }else {
-            event.getChannel().sendMessage("You are a special cloud, aren't you?").queue();
-            return;
+        }else { // You're special if you try to type .iam cloud in a different room
+            if (event.getMessage().getContentRaw().equals(".iam cloud")) {
+                event.getChannel().sendMessage("You are a special cloud, aren't you?").queue();
+            }
         }
     }
 }
