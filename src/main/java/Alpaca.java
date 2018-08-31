@@ -83,7 +83,6 @@ public class Alpaca extends ListenerAdapter {
             //remember to call queue()!
             //otherwise our message will never be sent
             event.getChannel().sendMessage("Pamf!").queue();
-
             return;
         }
 
