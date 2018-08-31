@@ -66,17 +66,15 @@ public class Alpaca extends ListenerAdapter {
         // Alpaca bot hears every thing owo
         System.out.println("We received a message from " +
                 event.getAuthor().getName() + ": " +
-                event.getMessage().getContentDisplay()
-        );
+                event.getMessage().getContentDisplay());
 
         // Pet Alpaca bot to have him reply "Pamf!"
         if (event.getMessage().getContentRaw().equals("!pet")){
             //remember to call queue()!
             //otherwise our message will never be sent
             event.getChannel().sendMessage("Pamf!").queue();
+            return;
         }
-
-        if (event.)
 
         // Give a user the Cloud role in ice prison
         if (event.getTextChannel().getId().equals("484645441749647361")) {
@@ -85,9 +83,10 @@ public class Alpaca extends ListenerAdapter {
                 event.getMessage().delete().queue();
                 // Alpaca bot gives Role
                 guildController.addSingleRoleToMember(member, cloud).queue();
-        }
+            }
         }else {
             event.getChannel().sendMessage("You are a special cloud, aren't you?").queue();
+            return;
         }
     }
 }
