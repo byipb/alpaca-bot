@@ -8,24 +8,32 @@ import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.dv8tion.jda.core.managers.GuildController;
-
 import javax.security.auth.login.LoginException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Alpaca extends ListenerAdapter {
 
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) throws LoginException, FileNotFoundException, IOException {
 
         try {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
-            String token = "NDg0NjIwODE5NzAwNTE0ODE3.DmkreA.5aZmPjYuzYGh5CfwJUSIauoITSU";
+            String token = new String (Files.readAllBytes(Paths.get("C:\\Users\\Dandy\\IdeaProjects\\discord-alpaca-bot\\src\\main\\resources\\token.txt")));
+
+//            while ((token != null){
+//                System.out.println(token);
+//            }
+            System.out.println(token);
             builder.setToken(token);
             builder.addEventListener(new Alpaca());
             builder.buildAsync();
         }
 
-        catch (LoginException e){
+        catch (LoginException | FileNotFoundException e){
             //If anything goes wrong in terms of authentication, this is the exception that will represent it
             e.printStackTrace();
         }
@@ -66,13 +74,16 @@ public class Alpaca extends ListenerAdapter {
         // Alpaca bot hears every thing owo
         System.out.println("We received a message from " +
                 event.getAuthor().getName() + ": " +
+
                 event.getMessage().getContentDisplay());
+
 
         // Pet Alpaca bot to have him reply "Pamf!"
         if (event.getMessage().getContentRaw().equals("!pet")){
             //remember to call queue()!
             //otherwise our message will never be sent
             event.getChannel().sendMessage("Pamf!").queue();
+
             return;
         }
 
