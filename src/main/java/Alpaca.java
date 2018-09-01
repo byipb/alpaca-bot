@@ -23,10 +23,6 @@ public class Alpaca extends ListenerAdapter {
         try {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
             String token = new String (Files.readAllBytes(Paths.get("./src/main/resources/token.txt")));
-
-//            while ((token != null){
-//                System.out.println(token);
-//            }
             System.out.println(token);
             builder.setToken(token);
             builder.addEventListener(new Alpaca());
@@ -38,19 +34,6 @@ public class Alpaca extends ListenerAdapter {
             e.printStackTrace();
         }
     }
-
-//    private void deleteMessage(MessageReceivedEvent event) throws InterruptedException {
-//
-//        try {
-//            TimeUnit.SECONDS.sleep(1);
-//            event.getMessage().delete();
-//            event.getMessage().delete();
-//        }
-//
-//        catch (InterruptedException e){
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
