@@ -44,6 +44,7 @@ public class Alpaca extends ListenerAdapter {
         TextChannel textChannel = event.getTextChannel();
         Member member = event.getMember();
         List<Role> roles = guild.getRoles();
+        boolean areYouDumb = false;
 
         // List of roles
         // Role snowflake = roles.get(3);
@@ -78,6 +79,16 @@ public class Alpaca extends ListenerAdapter {
                 event.getMessage().delete().queue();
                 // Alpaca bot gives Role
                 guildController.addSingleRoleToMember(member, cloud).queue();
+            } else if(event.getMessage().getContentRaw().contains(".iam") && !event.getMessage().getContentRaw().equals(".iam cloud")){
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                    event.getMessage().delete().queue();
+                    event.getChannel().sendMessage("Hah you fool! You should check \\#welcome again!").queue();
+                    //TimeUnit.SECONDS.sleep(60);
+                    event.getMessage().delete().queue();
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
             }
         }else { // You're special if you try to type .iam cloud in a different room
             if (event.getMessage().getContentRaw().equals(".iam cloud")) {
