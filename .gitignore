@@ -1,2 +1,5 @@
 # Ignore API token
 /main/resources/token.txt
+
+# Ignore .idea folder
+.idea/
