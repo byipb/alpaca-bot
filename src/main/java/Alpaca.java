@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Alpaca extends ListenerAdapter {
 
-    public static void main(String[] args) throws LoginException, FileNotFoundException, IOException {
+    public static void main(String[] args) throws IOException {
 
         try {
             JDABuilder builder = new JDABuilder(AccountType.BOT);
@@ -59,9 +59,13 @@ public class Alpaca extends ListenerAdapter {
                 event.getAuthor().getName() + ": " +
                 event.getMessage().getContentDisplay());
 
+        // Alpaca bot will reach out to help list all the commands!
+        if (event.getMessage().getContentRaw().equalsIgnoreCase(".help")){
+            event.getChannel().sendMessage("Here are the commands pamf: \n .help \n .pet" ).queue();
+        }
 
         // Pet Alpaca bot to have him reply "Pamf!"
-        if (event.getMessage().getContentRaw().equalsIgnoreCase("!pet")){
+        if (event.getMessage().getContentRaw().equalsIgnoreCase(".pet")){
             //remember to call queue()!
             //otherwise our message will never be sent
             event.getChannel().sendMessage("Pamf!").queue();
@@ -78,6 +82,16 @@ public class Alpaca extends ListenerAdapter {
         }else { // You're special if you try to type .iam cloud in a different room
             if (event.getMessage().getContentRaw().equals(".iam cloud")) {
                 event.getChannel().sendMessage("You are a special cloud, aren't you?").queue();
+            }
+        }
+
+        // Alpaca bot is the cutest in #test
+        if (event.getTextChannel().getId().equals("484628587392008203")) {
+            if (event.getAuthor().getId().equals("90837629502771200")) {
+                event.getChannel().sendMessage("Galaxy!").queue();
+            }
+            if (event.getAuthor().getId().equals("139247155582992384")) {
+                event.getChannel().sendMessage("World!!!").queue();
             }
         }
     }
