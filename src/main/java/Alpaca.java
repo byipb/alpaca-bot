@@ -79,6 +79,7 @@ public class Alpaca extends ListenerAdapter {
                 event.getMessage().delete().queue();
                 // Alpaca bot gives Role
                 guildController.addSingleRoleToMember(member, cloud).queue();
+                // Give error message when typed an incorrect command
             } else if(event.getMessage().getContentRaw().contains(".iam") && !event.getMessage().getContentRaw().equals(".iam cloud")){
                 try {
                     TimeUnit.SECONDS.sleep(2);
@@ -99,10 +100,10 @@ public class Alpaca extends ListenerAdapter {
         // Alpaca bot is the cutest in #test
         if (event.getTextChannel().getId().equals("484628587392008203")) {
             if (event.getAuthor().getId().equals("90837629502771200")) {
-                event.getChannel().sendMessage("Galaxy!").queue();
+                event.getChannel().sendMessage("GALAXY!").queue();
             }
             if (event.getAuthor().getId().equals("139247155582992384")) {
-                event.getChannel().sendMessage("World!!!").queue();
+                event.getChannel().sendMessage("WORLD!!!").queue();
             }
         }
     }
