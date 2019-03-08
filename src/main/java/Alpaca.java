@@ -1,9 +1,6 @@
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -15,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 public class Alpaca extends ListenerAdapter {
 
@@ -44,7 +42,10 @@ public class Alpaca extends ListenerAdapter {
         TextChannel textChannel = event.getTextChannel();
         Member member = event.getMember();
         List<Role> roles = guild.getRoles();
-        boolean areYouDumb = false;
+
+        // Messages
+        Message message = event.getMessage();
+        String rawMessage = event.getMessage().getContentRaw();
 
         // List of roles
         // Role snowflake = roles.get(3);
@@ -61,12 +62,12 @@ public class Alpaca extends ListenerAdapter {
                 event.getMessage().getContentDisplay());
 
         // Alpaca bot will reach out to help list all the commands!
-        if (event.getMessage().getContentRaw().equalsIgnoreCase(".help")){
+        if (rawMessage.equalsIgnoreCase(".help")){
             event.getChannel().sendMessage("Here are the commands pamf: \n .help \n .pet" ).queue();
         }
 
         // Pet Alpaca bot to have him reply "Pamf!"
-        if (event.getMessage().getContentRaw().equalsIgnoreCase(".pet")){
+        if (rawMessage.equalsIgnoreCase(".pet")){
             //remember to call queue()!
             //otherwise our message will never be sent
             event.getChannel().sendMessage("Pamf!").queue();
@@ -74,25 +75,45 @@ public class Alpaca extends ListenerAdapter {
 
         // Give a user the Cloud role in ice prison
         if (event.getTextChannel().getId().equals("484645441749647361")) {
-            if (event.getMessage().getContentRaw().equals(".iam cloud")) {
+            if (rawMessage.equals(".iam cloud")) {
                 // Delete messages to keep ice-prison clean, we aren't a dirty prison!
                 event.getMessage().delete().queue();
                 // Alpaca bot gives Role
                 guildController.addSingleRoleToMember(member, cloud).queue();
                 // Give error message when typed an incorrect command
-            } else if(event.getMessage().getContentRaw().contains(".iam") && !event.getMessage().getContentRaw().equals(".iam cloud")){
-                try {
-                    TimeUnit.SECONDS.sleep(2);
+            } else if(rawMessage.contains(".iam") && !rawMessage.equals(".iam cloud")){
                     event.getMessage().delete().queue();
-                    event.getChannel().sendMessage("Hah you fool! You should check <#423123478028484609> again!").queue();
+                    event.getChannel().sendMessage("Hah you fool! You should check <#423123478028484609> again!").queue(new Consumer<Message>() {
+                        // Wait 60 seconds then delete Alpaca's message
+                        @Override
+                        public void accept(Message message) {
+                            try {
+                                TimeUnit.SECONDS.sleep(60);
+                                message.delete().queue();
+                            } catch (InterruptedException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
                     //TimeUnit.SECONDS.sleep(60);
                     event.getMessage().delete().queue();
-                } catch (InterruptedException e){
-                    e.printStackTrace();
-                }
+            } else if (!rawMessage.startsWith(".iam")){
+                message.delete().queue();
+                event.getChannel().sendMessage("Hey! Stop dirtying the prison! PAMF!").queue(new Consumer<Message>(){
+                    @Override
+                    public void accept(Message message){
+                        try {
+                            TimeUnit.SECONDS.sleep(60);
+                            message.delete().queue();
+                        } catch (InterruptedException e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         }else { // You're special if you try to type .iam cloud in a different room
-            if (event.getMessage().getContentRaw().equals(".iam cloud")) {
+            if (rawMessage.equals(".iam cloud")) {
                 event.getChannel().sendMessage("You are a special cloud, aren't you?").queue();
             }
         }
