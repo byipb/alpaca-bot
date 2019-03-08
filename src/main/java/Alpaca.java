@@ -84,7 +84,7 @@ public class Alpaca extends ListenerAdapter {
                 try {
                     TimeUnit.SECONDS.sleep(2);
                     event.getMessage().delete().queue();
-                    event.getChannel().sendMessage("Hah you fool! You should check \\#welcome again!").queue();
+                    event.getChannel().sendMessage("Hah you fool! You should check <#423123478028484609> again!").queue();
                     //TimeUnit.SECONDS.sleep(60);
                     event.getMessage().delete().queue();
                 } catch (InterruptedException e){
@@ -101,7 +101,7 @@ public class Alpaca extends ListenerAdapter {
         if (event.getTextChannel().getId().equals("484628587392008203")) {
             if (event.getAuthor().getId().equals("90837629502771200")) {
                 event.getChannel().sendMessage("GALAXY!").queue();
-            }
+        }
             if (event.getAuthor().getId().equals("139247155582992384")) {
                 event.getChannel().sendMessage("WORLD!!!").queue();
             }
