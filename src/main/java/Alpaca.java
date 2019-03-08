@@ -16,6 +16,8 @@ import java.util.function.Consumer;
 
 public class Alpaca extends ListenerAdapter {
 
+    private static Command commandList;
+
     public static void main(String[] args) throws IOException {
 
         try {
@@ -25,12 +27,12 @@ public class Alpaca extends ListenerAdapter {
             builder.setToken(token);
             builder.addEventListener(new Alpaca());
             builder.buildAsync();
-        }
-
-        catch (LoginException | FileNotFoundException e){
+        } catch (LoginException | FileNotFoundException e){
             //If anything goes wrong in terms of authentication, this is the exception that will represent it
             e.printStackTrace();
         }
+
+        commandList = new Command();
     }
 
     @Override
@@ -46,6 +48,8 @@ public class Alpaca extends ListenerAdapter {
         // Messages
         Message message = event.getMessage();
         String rawMessage = event.getMessage().getContentRaw();
+
+
 
         // List of roles
         // Role snowflake = roles.get(3);
@@ -63,7 +67,7 @@ public class Alpaca extends ListenerAdapter {
 
         // Alpaca bot will reach out to help list all the commands!
         if (rawMessage.equalsIgnoreCase(".help")){
-            event.getChannel().sendMessage("Here are the commands pamf: \n .help \n .pet" ).queue();
+            event.getChannel().sendMessage("Here are the commands pamf: "+commandList.printCommands()).queue();
         }
 
         // Pet Alpaca bot to have him reply "Pamf!"
@@ -125,6 +129,13 @@ public class Alpaca extends ListenerAdapter {
         }
             if (event.getAuthor().getId().equals("139247155582992384")) {
                 event.getChannel().sendMessage("WORLD!!!").queue();
+            }
+        }
+
+        if (event.getAuthor().getId().equals("139247155582992384") || event.getAuthor().getId().equals("484628587392008203")){
+            if (rawMessage.startsWith(".add ")){
+                String temp = rawMessage.substring(5);
+                commandList.addCommand("."+temp);
             }
         }
     }
