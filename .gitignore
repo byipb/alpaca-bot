@@ -1,5 +1,9 @@
 # Ignore API token
 /main/resources/token.txt
 
-# Ignore .idea folder
+# Ignore .idea, .gradle, out folder
 .idea/
+.gradle/
+out/
+src/main/resources/token.txt
+src/main/resources/META-INF/MANIFEST.MF
