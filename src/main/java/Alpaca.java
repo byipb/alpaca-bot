@@ -49,7 +49,8 @@ public class Alpaca extends ListenerAdapter {
         Message message = event.getMessage();
         String rawMessage = event.getMessage().getContentRaw();
 
-
+        // Used for pinging
+        String memberID = member.getAsMention();
 
         // List of roles
         // Role snowflake = roles.get(3);
@@ -87,28 +88,25 @@ public class Alpaca extends ListenerAdapter {
                 // Give error message when typed an incorrect command
             } else if(rawMessage.contains(".iam") && !rawMessage.equals(".iam cloud")){
                     event.getMessage().delete().queue();
-                    event.getChannel().sendMessage("Hah you fool! You should check <#423123478028484609> again!").queue(new Consumer<Message>() {
+                    event.getChannel().sendMessage(memberID+" Hah you fool! You should check <#423123478028484609> again! ").queue(new Consumer<Message>() {
                         // Wait 60 seconds then delete Alpaca's message
                         @Override
                         public void accept(Message message) {
                             try {
-                                TimeUnit.SECONDS.sleep(60);
+                                TimeUnit.SECONDS.sleep(10);
                                 message.delete().queue();
                             } catch (InterruptedException e){
                                 e.printStackTrace();
                             }
                         }
                     });
-
-                    //TimeUnit.SECONDS.sleep(60);
-                    event.getMessage().delete().queue();
             } else if (!rawMessage.startsWith(".iam")){
                 message.delete().queue();
                 event.getChannel().sendMessage("Hey! Stop dirtying the prison! PAMF!").queue(new Consumer<Message>(){
                     @Override
                     public void accept(Message message){
                         try {
-                            TimeUnit.SECONDS.sleep(60);
+                            TimeUnit.SECONDS.sleep(10);
                             message.delete().queue();
                         } catch (InterruptedException e){
                             e.printStackTrace();
