@@ -102,7 +102,7 @@ public class Alpaca extends ListenerAdapter {
                     });
             } else if (!rawMessage.startsWith(".iam")){
                 message.delete().queue();
-                event.getChannel().sendMessage("Hey! Stop dirtying the prison! PAMF!").queue(new Consumer<Message>(){
+                event.getChannel().sendMessage("Hey "+memberID+ "! Stop dirtying the prison! You should check <#423123478028484609> again! PAMF!").queue(new Consumer<Message>(){
                     @Override
                     public void accept(Message message){
                         try {
